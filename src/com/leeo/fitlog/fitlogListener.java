@@ -2,6 +2,7 @@ package com.leeo.fitlog;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -28,24 +29,101 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class fitlogListener implements Listener{
-    private fitlogMain plugin;
+public class FitlogListener<event> implements Listener{
+    private static FitlogLogger logger = new FitlogLogger();
+    Logger log;
+    String data;
+    
+    public FitlogListener(Logger l) {
+        log = l;
+    }
+    
+    private FitlogMain plugin;
     
     JSONObject jsonObject = new JSONObject();
     JSONArray personArray = new JSONArray();
     JSONObject personInfo = new JSONObject();
     
-    public void jsonInitilalize(){ 
-        // Json formmater
-        JSONObject jsonObject = new JSONObject();
-        JSONArray personArray = new JSONArray();
-        JSONObject personInfo = new JSONObject();
-    }
-    
-    public fitlogListener(fitlogMain instance){
+    public FitlogListener(FitlogMain instance){
         plugin = instance;
     }
     
+    // List of Registered GameLog
+
+    // Related Block Event
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent event){
+        data = logger.logMaker(event);
+        log.info(data);
+    }
+    @EventHandler
+    public void onBlockPlace(BlockPlaceEvent event){
+        logger.logMaker(event);
+    }
+    
+    // Related Enchantment Event
+    @EventHandler
+    public void onEnchantItem(EnchantItemEvent event){
+        logger.logMaker(event);
+    }
+    
+    // Related Entity Event
+    @EventHandler
+    public void onPlayerDeath(PlayerDeathEvent event){
+        logger.logMaker(event);
+    }
+    @EventHandler
+    public void onEntityDeathEvent(EntityDeathEvent event){
+        logger.logMaker(event);
+    }
+    
+    // Related Hanging Event
+    @EventHandler
+    public void onHangingBreakEvent(HangingBreakByEntityEvent event){
+        logger.logMaker(event);
+    }
+    @EventHandler
+    public void onHangingPlaceEvent(HangingPlaceEvent event){
+        logger.logMaker(event);
+    }
+    
+    // Related Inventory Event
+    @EventHandler
+    public void onCraftItemEvent(CraftItemEvent event){
+        logger.logMaker(event);
+    }
+    
+    // Related Player Event
+    @EventHandler
+    public void onInteract(PlayerInteractEvent event){
+        logger.logMaker(event);
+    }
+    @EventHandler
+    public void onPlayerEat(PlayerItemConsumeEvent event){
+        logger.logMaker(event);
+    }
+    @EventHandler
+    public void onPlayerItemHeldEvent(PlayerItemHeldEvent event){
+        logger.logMaker(event);
+    }
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event){
+        logger.logMaker(event);
+    }
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent event){
+        logger.logMaker(event);
+    }
+    @EventHandler
+    public void onPickupItemEvent(PlayerPickupItemEvent event){
+        logger.logMaker(event);
+    }
+    @EventHandler
+    public void onPlayerQuitEvent(PlayerQuitEvent event){
+        logger.logMaker(event);
+    }
+    
+    /*
     // User Death Event
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event){
@@ -377,9 +455,9 @@ public class fitlogListener implements Listener{
     }
     
     public static void setLastRegion(Map<String, String> lastRegion){
-        fitlogListener.lastRegion = lastRegion;
+        FitlogListener.lastRegion = lastRegion;
     }
-
+    */
 
 
 
