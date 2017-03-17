@@ -40,10 +40,6 @@ public class FitlogListener<event> implements Listener{
     
     private FitlogMain plugin;
     
-    JSONObject jsonObject = new JSONObject();
-    JSONArray personArray = new JSONArray();
-    JSONObject personInfo = new JSONObject();
-    
     public FitlogListener(FitlogMain instance){
         plugin = instance;
     }
