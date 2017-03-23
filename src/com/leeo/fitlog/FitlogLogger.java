@@ -133,6 +133,7 @@ public class FitlogLogger {
             if (!lastRegion.containsKey(player.getName())){
                 lastRegion.put(player.getName(), null);
             }
+            // 메모리를 계속 먹는다.
             
             if (Math.abs( (to.getBlockX()-from.getBlockX()) + (to.getBlockZ()-from.getBlockZ())) > 0 ||
                 Math.abs( (to.getBlockY()-from.getBlockY())) > 0 ){
