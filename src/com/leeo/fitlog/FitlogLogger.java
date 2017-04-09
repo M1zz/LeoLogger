@@ -33,6 +33,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class FitlogLogger {
     private static Map<String, String> lastRegion = new HashMap<>();
@@ -45,6 +48,7 @@ public class FitlogLogger {
     
     // Logger
     public String logMaker(Event event){
+        // Initialization
         String playerName   = "";
         String eventName    = "";
         String itemName     = "";
@@ -64,7 +68,7 @@ public class FitlogLogger {
             Player player = ((BlockPlaceEvent) event).getPlayer();
             playerName = player.getName();
             
-            itemName = ((BlockBreakEvent) event).getBlock().getType().toString();
+            itemName = ((BlockPlaceEvent) event).getBlock().getType().toString();
         }
         
         // Enchantment Event
@@ -97,26 +101,66 @@ public class FitlogLogger {
         
         // Hanging Event
         else if (event instanceof HangingBreakByEntityEvent){
-            System.out.print("HangingBreakByEntityEvent");
+            Player player = (Player) ((HangingBreakByEntityEvent) event).getRemover();
+            playerName = player.getName();
+            
+            itemName = ((HangingBreakByEntityEvent) event).getEntity().getName().toString();
+
         }
         else if (event instanceof HangingPlaceEvent){
-            System.out.print("HangingPlaceEvent");
+            Player player = ((HangingPlaceEvent) event).getPlayer();
+            playerName = player.getName();
+            
+            itemName = ((HangingPlaceEvent) event).getEntity().getName().toString();
         }
         
         // Inventory Event
         else if (event instanceof CraftItemEvent){
-            System.out.print("CraftItemEvent");
+            Player player = (Player) ((CraftItemEvent) event).getWhoClicked();
+            playerName = player.getName();
+            
+            ItemStack result = ((CraftItemEvent) event).getCurrentItem();
+            //ItemStack result = event.getRecipe().getResult();
+            int mount = result.getAmount();
+            message = String.valueOf(mount);
         }
         
         // Player Event
         else if (event instanceof PlayerInteractEvent){
-            System.out.print("PlayerInteractEvent");
+            Player player = ((PlayerInteractEvent) event).getPlayer();
+            playerName = player.getName();
+            
+            itemName = player.getItemInHand().getItemMeta().getDisplayName();
         }
         else if (event instanceof PlayerItemConsumeEvent){
-            System.out.print("PlayerItemConsumeEvent");
+            try{
+                Player player = ((PlayerItemConsumeEvent) event).getPlayer();
+                playerName = player.getName();
+                
+                itemName = player.getItemInHand().getItemMeta().getDisplayName();
+         
+            }catch(NullPointerException e){
+                Player player = ((PlayerItemConsumeEvent) event).getPlayer();
+                playerName = player.getName();
+                
+                itemName   = player.getItemInHand().getData().getItemType().toString();
+            }
         }
-        else if (event instanceof PlayerItemHeldEvent){
-            System.out.print("PlayerItemHeldEvent");
+        else if (event instanceof PlayerItemHeldEvent){   
+            try{
+                Player player = ((PlayerItemHeldEvent) event).getPlayer();
+                playerName = player.getName();          
+                                       
+                int slot = ((PlayerItemHeldEvent) event).getNewSlot();
+                
+                PlayerInventory inv = player.getInventory();
+                ItemStack is = inv.getItem(slot);
+                ItemMeta im = is.getItemMeta();
+        
+                itemName = is.getItemMeta().getDisplayName();
+            }catch(NullPointerException e){
+                
+            }
         }
         else if (event instanceof PlayerJoinEvent){
             Player player = ((PlayerJoinEvent) event).getPlayer();
@@ -138,13 +182,14 @@ public class FitlogLogger {
             if (Math.abs( (to.getBlockX()-from.getBlockX()) + (to.getBlockZ()-from.getBlockZ())) > 0 ||
                 Math.abs( (to.getBlockY()-from.getBlockY())) > 0 ){
                 eventName = event.getEventName();
+                message   = String.valueOf(from.getBlockX())+"."+String.valueOf(from.getBlockY())+"."+String.valueOf(from.getBlockZ());
             }
         }
         else if (event instanceof PlayerPickupItemEvent){
             Player player = ((PlayerPickupItemEvent) event).getPlayer();
             playerName = player.getName();
             
-            itemName = ((PlayerPickupItemEvent) event).getItem().getItemStack().getType().toString();
+            itemName = ((PlayerPickupItemEvent) event).getItem().getItemStack().getItemMeta().getDisplayName();
         }
         else if (event instanceof PlayerQuitEvent){
             Player player = ((PlayerQuitEvent) event).getPlayer();
@@ -165,9 +210,9 @@ public class FitlogLogger {
                 //System.out.print("NullPointerException");
             }
         }
-        return data;
+        return null;
     }
-    
+
     public static Map<String, String> getLastRegion() {
         return lastRegion;
     }

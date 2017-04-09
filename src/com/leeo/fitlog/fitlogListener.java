@@ -32,10 +32,10 @@ import org.json.simple.JSONObject;
 public class FitlogListener<event> implements Listener{
     private static FitlogLogger logger = new FitlogLogger();
     Logger log;
-    String data;
+    String user_event_data;
     
-    public FitlogListener(Logger l) {
-        log = l;
+    public FitlogListener(Logger logger) {
+        log = logger;
     }
     
     private FitlogMain plugin;
@@ -49,74 +49,108 @@ public class FitlogListener<event> implements Listener{
     // Related Block Event
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event){
-        data = logger.logMaker(event);
-        log.info(data);
+        user_event_data = logger.logMaker(event);
+        log.info(user_event_data);
     }
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event){
-        logger.logMaker(event);
+        user_event_data = logger.logMaker(event);
+        log.info(user_event_data);
     }
     
     // Related Enchantment Event
     @EventHandler
     public void onEnchantItem(EnchantItemEvent event){
-        logger.logMaker(event);
+        user_event_data = logger.logMaker(event);
+        log.info(user_event_data);
     }
     
     // Related Entity Event
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event){
-        logger.logMaker(event);
+        user_event_data = logger.logMaker(event);
+        log.info(user_event_data);
     }
     @EventHandler
     public void onEntityDeathEvent(EntityDeathEvent event){
-        logger.logMaker(event);
+        user_event_data = logger.logMaker(event);
+        log.info(user_event_data);
     }
     
     // Related Hanging Event
     @EventHandler
     public void onHangingBreakEvent(HangingBreakByEntityEvent event){
-        logger.logMaker(event);
+        user_event_data = logger.logMaker(event);
+        if (user_event_data != null){
+            log.info(user_event_data);
+        }
     }
     @EventHandler
     public void onHangingPlaceEvent(HangingPlaceEvent event){
-        logger.logMaker(event);
+        user_event_data = logger.logMaker(event);
+        if (user_event_data != null){
+            log.info(user_event_data);
+        }
     }
     
     // Related Inventory Event
     @EventHandler
     public void onCraftItemEvent(CraftItemEvent event){
-        logger.logMaker(event);
+        user_event_data = logger.logMaker(event);
+        if (user_event_data != null){
+            log.info(user_event_data);
+        }
     }
     
     // Related Player Event
     @EventHandler
     public void onInteract(PlayerInteractEvent event){
-        logger.logMaker(event);
+        user_event_data = logger.logMaker(event);
+        if (user_event_data != null){
+            log.info(user_event_data);
+        }
     }
     @EventHandler
     public void onPlayerEat(PlayerItemConsumeEvent event){
-        logger.logMaker(event);
+        user_event_data = logger.logMaker(event);
+        if (user_event_data != null){
+            log.info(user_event_data);
+        }
     }
     @EventHandler
     public void onPlayerItemHeldEvent(PlayerItemHeldEvent event){
-        logger.logMaker(event);
+        user_event_data = logger.logMaker(event);
+        if (user_event_data != null){
+            log.info(user_event_data);
+        }
     }
     @EventHandler
     public void onJoin(PlayerJoinEvent event){
-        logger.logMaker(event);
+        user_event_data = logger.logMaker(event);
+        if (user_event_data != null){
+            log.info(user_event_data);
+        }
     }
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event){
-        logger.logMaker(event);
+        user_event_data = logger.logMaker(event);
+        if (user_event_data != null){
+            log.info(user_event_data);
+        }
     }
     @EventHandler
     public void onPickupItemEvent(PlayerPickupItemEvent event){
-        logger.logMaker(event);
+        user_event_data = logger.logMaker(event);
+        if (user_event_data != null){
+            log.info(user_event_data);
+        }
     }
     @EventHandler
     public void onPlayerQuitEvent(PlayerQuitEvent event){
-        logger.logMaker(event);
+        user_event_data = logger.logMaker(event);
+        if (user_event_data != null){
+            log.info(user_event_data);
+        }
     }
     
     /*

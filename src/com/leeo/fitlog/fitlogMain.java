@@ -2,6 +2,8 @@ package com.leeo.fitlog;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -20,14 +22,16 @@ public class FitlogMain extends JavaPlugin{
     
     public void onEnable(){
         initEvent();
-	    System.out.println("[Fitlog] fitlog v.1.0.8 Plugin is Enable.");
+	    System.out.println("[Fitlog] fitlog v.1.0.2 Plugin is Enable.");
+	    
+	    String inDate   = new java.text.SimpleDateFormat("yyyyMMdd").format(new java.util.Date());
 
 	    // Set up logfile for player events
         playerLog = Logger.getAnonymousLogger();
         playerLog.setUseParentHandlers(false);
         
         try {
-            Handler playerHandler = new FileHandler(getDataFolder() + File.separator + "fitlog.log", true);
+            Handler playerHandler = new FileHandler(getDataFolder() + File.separator + inDate +".log", true);
             playerLog.addHandler(playerHandler);
             playerHandler.setFormatter(new FitlogFormatter());
         } catch (SecurityException e) {
@@ -44,7 +48,7 @@ public class FitlogMain extends JavaPlugin{
     }
     
     public void onDisable(){
-        System.out.println("[Fitlog] fitlog v.1.0.8 Plugin is Disable.");
+        System.out.println("[Fitlog] fitlog v.1.0.2 Plugin is Disable.");
         
         playerLog.info("End of log");
         playerLog.removeHandler(playerHandler);
