@@ -131,6 +131,9 @@ public class FitlogLogger {
             playerName = player.getName();
             try{
                 itemName = player.getItemInHand().getItemMeta().getDisplayName();
+                if (itemName.isEmpty()){
+                    itemName = player.getItemInHand().getType().toString();
+                }
             }
             catch(NullPointerException e){
                 itemName = "Hand";
@@ -143,6 +146,10 @@ public class FitlogLogger {
                 playerName = player.getName();
                 
                 itemName = player.getItemInHand().getItemMeta().getDisplayName();
+                
+                if (itemName.isEmpty()){
+                    itemName = ((PlayerItemConsumeEvent) event).getItem().getType().toString();
+                }
          
             }catch(NullPointerException e){
                 Player player = ((PlayerItemConsumeEvent) event).getPlayer();
@@ -163,6 +170,9 @@ public class FitlogLogger {
                 ItemMeta im = is.getItemMeta();
         
                 itemName = is.getItemMeta().getDisplayName();
+                if (itemName.isEmpty()){
+                    itemName = is.getType().toString();
+                }
             }catch(NullPointerException e){
                 
             }
@@ -205,7 +215,7 @@ public class FitlogLogger {
         }
         
         
-        if (!(eventName.isEmpty())){
+        if (!(eventName.isEmpty()) && !(playerName.isEmpty())){
             data = playerName+","+eventName+","+itemName+","+message;
             System.out.print(data);
             try{
