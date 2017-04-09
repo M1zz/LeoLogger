@@ -129,8 +129,13 @@ public class FitlogLogger {
         else if (event instanceof PlayerInteractEvent){
             Player player = ((PlayerInteractEvent) event).getPlayer();
             playerName = player.getName();
+            try{
+                itemName = player.getItemInHand().getItemMeta().getDisplayName();
+            }
+            catch(NullPointerException e){
+                itemName = "Hand";
+            }
             
-            itemName = player.getItemInHand().getItemMeta().getDisplayName();
         }
         else if (event instanceof PlayerItemConsumeEvent){
             try{
