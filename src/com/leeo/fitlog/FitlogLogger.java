@@ -67,8 +67,15 @@ public class FitlogLogger {
         else if (event instanceof BlockPlaceEvent){
             Player player = ((BlockPlaceEvent) event).getPlayer();
             playerName = player.getName();
-            
-            itemName = ((BlockPlaceEvent) event).getBlock().getType().toString();
+            try{
+                itemName = player.getItemInHand().getItemMeta().getDisplayName();
+                if (itemName == null){
+                    itemName = ((BlockPlaceEvent) event).getBlock().getType().toString();
+                }
+            }
+            catch(NullPointerException e){
+                itemName = "ERROR_BLOCK_PLACEMENT";
+            } 
         }
         
         // Enchantment Event
@@ -94,7 +101,7 @@ public class FitlogLogger {
 
             }
             catch(NullPointerException e){
-                System.out.print("NullPointerException");
+                //System.out.print("NullPointerException");
             }
             
         }
@@ -131,7 +138,7 @@ public class FitlogLogger {
             playerName = player.getName();
             try{
                 itemName = player.getItemInHand().getItemMeta().getDisplayName();
-                if (itemName.isEmpty()){
+                if (itemName == null){
                     itemName = player.getItemInHand().getType().toString();
                 }
             }
@@ -170,11 +177,12 @@ public class FitlogLogger {
                 ItemMeta im = is.getItemMeta();
         
                 itemName = is.getItemMeta().getDisplayName();
-                if (itemName.isEmpty()){
+                
+                if (itemName == null){
                     itemName = is.getType().toString();
                 }
             }catch(NullPointerException e){
-                
+                itemName = "Hand";
             }
         }
         else if (event instanceof PlayerJoinEvent){
