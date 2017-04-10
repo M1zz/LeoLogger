@@ -211,8 +211,12 @@ public class FitlogLogger {
         else if (event instanceof PlayerPickupItemEvent){
             Player player = ((PlayerPickupItemEvent) event).getPlayer();
             playerName = player.getName();
-            
+                        
             itemName = ((PlayerPickupItemEvent) event).getItem().getItemStack().getItemMeta().getDisplayName();
+            
+            if(itemName == null){
+                itemName   = ((PlayerPickupItemEvent) event).getItem().getItemStack().getType().toString();
+            }
         }
         else if (event instanceof PlayerQuitEvent){
             Player player = ((PlayerQuitEvent) event).getPlayer();
