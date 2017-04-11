@@ -98,6 +98,7 @@ public class FitlogLogger {
             try{
                 Player player = ((EntityDeathEvent) event).getEntity().getKiller();
                 playerName = player.getName();
+                message = ((EntityDeathEvent) event).getEntity().getName();
 
             }
             catch(NullPointerException e){
